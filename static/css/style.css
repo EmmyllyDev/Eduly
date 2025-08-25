@@ -1,0 +1,21 @@
+/* Adicione este código ao seu arquivo CSS principal */
+
+/* Estilo para os links da navbar */
+.navbar-nav .nav-link {
+    color: #5a5a5a; /* Cor cinza escuro para os links inativos */
+    font-weight: 500;
+    margin: 0 0.25rem; /* Pequeno espaçamento entre os links */
+    padding: 0.5rem 1rem;
+}
+
+/* 🎯 ESTE É O ESTILO PRINCIPAL PARA O LINK ATIVO */
+.navbar-nav .nav-link.active {
+    background-color: #0d6efd; /* Azul padrão do Bootstrap */
+    color: white !important; /* Cor do texto branco */
+    border-radius: 0.5rem;   /* Bordas arredondadas */
+}
+
+/* Efeito hover para os links inativos */
+.navbar-nav .nav-link:not(.active):hover {
+    color: #000;
+}

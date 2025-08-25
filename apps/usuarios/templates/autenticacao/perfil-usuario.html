@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Meu Perfil - Eduly{% endblock %}
+
+{% block content %}
+<div class="container-lg my-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h4 fw-bold mb-0">Meu Perfil</h2>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold">Informações Pessoais</h5>
+                    <p class="card-subtitle text-muted small">Gerencie suas informações de perfil e configurações da conta.</p>
+                    <hr class="my-4">
+
+                    <form action="{% url 'usuarios:editar_perfil_usuario' %}" method="POST" id="form-perfil">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="first_name" class="form-label small fw-bold">Nome Completo</label>
+                                <div class="profile-field" data-field="first_name">{{ usuario.get_full_name|default:usuario.username }}</div>
+                                <input type="text" class="form-control d-none" name="first_name" value="{{ usuario.get_full_name|default:usuario.username }}" id="first_name">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label small fw-bold">Email</label>
+                                <div class="profile-field" data-field="email">{{ usuario.email }}</div>
+                                <input type="email" class="form-control d-none" name="email" value="{{ usuario.email }}" id="email">
+                            </div>
+
+                                {% if usuario.perfil_acesso == "Administrador" %}
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Cargo</label>
+                                        <div class="profile-field">{{ usuario.cargo|default:'Não informado' }}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Instituição</label>
+                                        <div class="profile-field">{{ usuario.instituicao|default:'Não informada' }}</div>
+                                    </div>
+                                {% elif usuario.perfil_acesso == "Professor" %}
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Disciplina</label>
+                                        <div class="profile-field">{{ usuario.disciplina|default:'Não informada' }}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Turmas</label>
+                                        <div class="profile-field">{{ usuario.turmas|default:'Não informadas' }}</div>
+                                    </div>
+                                {% elif usuario.perfil_acesso == "Aluno" %}
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Turma</label>
+                                        <div class="profile-field">{{ usuario.turma|default:'Não informada' }}</div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label small fw-bold">Período</label>
+                                        <div class="profile-field">{{ usuario.periodo|default:'Não informado' }}</div>
+                                    </div>
+                                {% endif %}
+                        </div>
+                        
+                        <div class="d-flex justify-content-end mt-4">
+                            <button type="button" class="btn btn-outline-secondary me-2" id="btn-editar">
+                                <i class="bi bi-pencil-square me-1"></i> Editar Perfil
+                            </button>
+                            <button type="submit" class="btn btn-primary d-none" id="btn-salvar">
+                                <i class="bi bi-save me-1"></i> Salvar Alterações
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-person-lines-fill fs-4 me-2"></i>
+                        <h5 class="card-title fw-bold mb-0">Informações da Conta</h5>
+                    </div>
+
+                    <ul class="list-group list-group-flush small">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span class="text-muted">Tipo de Usuário</span>
+                            <span class="badge bg-dark rounded-pill">{{ usuario.perfil_acesso|default:'Usuário' }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span class="text-muted">Status</span>
+                            <span class="fw-bold {% if usuario.is_active %}text-success{% else %}text-danger{% endif %}">
+                                {% if usuario.is_active %}Ativo{% else %}Inativo{% endif %}
+                            </span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span class="text-muted">Último Acesso</span>
+                            <span class="fw-bold">{{ usuario.last_login|date:"d/m/Y, H:i"|default:"N/A" }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <span class="text-muted">Membro desde</span>
+                            <span class="fw-bold">{{ usuario.date_joined|date:"F Y" }}</span>
+                        </li>
+                    </ul>
+
+                    <h6 class="text-muted small text-uppercase mt-4 mb-3">Configurações</h6>
+                    <a href="#" class="config-link" id="btn-alterar-email-link">
+                        <i class="bi bi-envelope me-2"></i> Alterar Email
+                    </a>
+                    <a href="#" class="config-link" data-bs-toggle="modal" data-bs-target="#modalAlterarSenha">
+                        <i class="bi bi-lock me-2"></i> Alterar Senha
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mt-4">
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="fw-bold mb-0">Sair do Sistema</h6>
+                    <p class="text-muted small mb-0">Encerre sua sessão atual e retorne à tela de login.</p>
+                </div>
+                <a href="{% url 'usuarios:logout_eduly' %}" class="btn btn-danger">
+                    <i class="bi bi-box-arrow-right me-1"></i> Sair do Sistema
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAlterarSenha" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Alterar Senha</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{% url 'usuarios:alterar_senha_usuario' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="senha_atual" class="form-label">Senha Atual</label>
+                        <input type="password" class="form-control" name="senha_atual" id="senha_atual" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nova_senha" class="form-label">Nova Senha (mínimo 8 caracteres)</label>
+                        <input type="password" class="form-control" name="nova_senha" id="nova_senha" required minlength="8">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmar_senha" class="form-label">Confirmar Nova Senha</label>
+                        <input type="password" class="form-control" name="confirmar_senha" id="confirmar_senha" required minlength="8">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar Nova Senha</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Elementos do formulário de perfil
+    const btnEditar = document.getElementById('btn-editar');
+    const btnSalvar = document.getElementById('btn-salvar');
+    const formPerfil = document.getElementById('form-perfil');
+    const displayFields = formPerfil.querySelectorAll('.profile-field');
+    const inputFields = formPerfil.querySelectorAll('.form-control');
+    
+    // Link para alterar email na coluna da direita
+    const btnAlterarEmail = document.getElementById('btn-alterar-email-link');
+
+    // Função que ativa o modo de edição
+    function enterEditMode(event) {
+        event.preventDefault(); // Impede que o link de alterar e-mail mude a URL
+        
+        // Alterna a visibilidade dos campos de texto e inputs
+        displayFields.forEach(field => field.classList.toggle('d-none'));
+        inputFields.forEach(input => input.classList.toggle('d-none'));
+
+        // Alterna a visibilidade dos botões
+        btnEditar.classList.toggle('d-none');
+        btnSalvar.classList.toggle('d-none');
+    }
+
+    // Adiciona o evento de clique aos dois gatilhos: o botão e o link
+    btnEditar.addEventListener('click', enterEditMode);
+    btnAlterarEmail.addEventListener('click', enterEditMode);
+});
+</script>
+{% endblock %}

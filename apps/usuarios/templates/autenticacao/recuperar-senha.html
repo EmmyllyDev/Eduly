@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Senha - Eduly</title>
+</head>
+<body>
+    <h1>Recuperar Senha</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <label>E-mail ou Usuário:</label>
+        <input type="text" name="username_email" required><br><br>
+        <button type="submit">Recuperar</button>
+    </form>
+
+    <p><a href="{% url 'usuarios:login_eduly' %}">Voltar para Login</a></p>
+</body>
+</html>

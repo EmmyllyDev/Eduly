@@ -1,0 +1,62 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom">
+    <div class="container-fluid">
+        <!-- logo -->
+        <a class="navbar-brand" href="{% url 'usuarios:home_redirect' %}">
+            <img src="{% static 'img/logoEduly.jpg' %}" alt="Logo Eduly" width="80">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if request.user.perfil_acesso == "Aluno" %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:dashboard_aluno' %}">Meus Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Notas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Frequência</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Avisos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:perfil_usuario' %}">Perfil</a></li>
+                {% elif request.user.perfil_acesso == "Professor" %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:dashboard_professor' %}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Minhas Disciplinas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Notas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:perfil_usuario' %}">Perfil</a></li>
+                {% elif request.user.perfil_acesso == "Administrador" %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:dashboard_administrador' %}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:gerenciar_usuarios' %}">Usuários</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Cursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Disciplinas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Turmas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'usuarios:perfil_usuario' %}">Perfil</a></li>
+                {% endif %}
+            </ul>
+
+            <!-- Ícones e perfil -->
+            <ul class="navbar-nav ms-auto d-flex align-items-center">
+                <li class="nav-item me-3">
+                    <a class="nav-link position-relative" href="#"><i class="bi bi-envelope fs-5"></i>
+                        <img src="{% static 'img/bell.svg' %}" alt="notificacao" width="20" class="rounded-circle me-2">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3</span>
+                    </a>
+                </li>
+                <li class="nav-item me-3">
+                    <a class="nav-link position-relative" href="#"><i class="bi bi-bell fs-5"></i>
+                        <img src="{% static 'img/chat.svg' %}" alt="chat" width="20" class="rounded-circle me-2">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">5</span>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link position-relative" href="#"><i class="bi bi-bell fs-5"></i>
+                        <img src="{% static 'img/avatar.svg' %}" alt="Avatar" width="20" class="rounded-circle me-2">
+                        <span>{{ request.user.get_full_name|default:request.user.username }}</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Meus Cursos - Eduly{% endblock %}
+
+{% block content %}
+<main class="container mt-4">
+    <div class="d-flex flex-wrap align-items-center justify-content-between mb-4 gap-3">
+        <h1 class="h2 mb-0">Meus Cursos</h1>
+        <div class="d-flex align-items-center gap-2">
+            <div class="dropdown">
+                <button class="btn btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">Todos</button>
+                </div>
+            <input type="text" class="form-control" placeholder="Buscar">
+            <div class="dropdown">
+                <button class="btn btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown">Ordenar por nome</button>
+                </div>
+        </div>
+    </div>
+    
+    <p class="text-muted">Resumo dos cursos</p>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        <div class="col">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header text-end border-0 p-3" style="height: 120px; background: linear-gradient(135deg, #5f72be, #9673b9);">
+                    <a href="#" class="text-white opacity-75"><i class="bi bi-three-dots-vertical"></i></a>
+                </div>
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold">Matemática</h5>
+                    <p class="card-text small text-muted">20252.6.7844.489.11</p>
+                    
+                    <div class="d-flex justify-content-between small text-muted mb-1">
+                        <span>Progresso</span>
+                        <span>75% completo</span>
+                    </div>
+                    <div class="progress" style="height: 8px;">
+                        <div class="progress-bar" role="progressbar" style="width: 75%;" aria-valuenow="75"></div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="small text-muted"><i class="bi bi-clock me-1"></i> Segunda, 08:00</span>
+                        <div class="text-center">
+                            <span class="small text-muted d-block">Nota</span>
+                            <span class="badge bg-primary-subtle text-primary-emphasis rounded-pill px-2">8.5</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+             <div class="card border-0 shadow-sm h-100">
+                <div class="card-header text-end border-0 p-3" style="height: 120px; background: linear-gradient(135deg, #30c08b, #28a745);">
+                     <a href="#" class="text-white opacity-75"><i class="bi bi-three-dots-vertical"></i></a>
+                </div>
+                <div class="card-body p-4">
+                    </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard Administrativo - Eduly{% endblock %}
+
+{% block content %}
+<main class="container-fluid bg-light p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard Administrativo</h1>
+        <span class="badge bg-secondary fw-normal">Rede Municipal de Ensino</span>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4 mb-4">
+
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-title text-muted small text-uppercase">Total de Alunos</h6>
+                            <h2 class="fw-bold">1247</h2>
+                            <p class="small text-success mb-0">+12%</p>
+                        </div>
+                        <i class="bi bi-people-fill text-muted fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-title text-muted small text-uppercase">Professores</h6>
+                            <h2 class="fw-bold">89</h2>
+                            <p class="small text-success mb-0">+3 novos</p>
+                        </div>
+                        <i class="bi bi-person-video3 text-muted fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-title text-muted small text-uppercase">Cursos</h6>
+                            <h2 class="fw-bold">15</h2>
+                            <p class="small text-muted mb-0">Todos os níveis</p>
+                        </div>
+                        <i class="bi bi-book-half text-muted fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-title text-muted small text-uppercase">Disciplinas</h6>
+                            <h2 class="fw-bold">42</h2>
+                            <p class="small text-muted mb-0">Grade completa</p>
+                        </div>
+                        <i class="bi bi-bookmark-check-fill text-muted fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h6 class="card-title text-muted small text-uppercase">Turmas</h6>
+                            <h2 class="fw-bold">56</h2>
+                            <p class="small text-muted mb-0">Distribuídas</p>
+                        </div>
+                        <i class="bi bi-collection-fill text-muted fs-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <h5 class="card-title mb-1">Atividades Recentes</h5>
+                    <p class="card-subtitle text-muted small mb-4">Últimas ações no sistema</p>
+
+                    <div class="list-group list-group-flush">
+                        <div class="list-group-item d-flex align-items-center px-0">
+                            <i class="bi bi-person-plus-fill text-primary fs-4 me-3"></i>
+                            <div class="flex-grow-1">
+                                <p class="fw-bold mb-0">Novo aluno cadastrado</p>
+                                <small class="text-muted">João Pedro - 9º A</small>
+                            </div>
+                            <span class="small text-muted">2h atrás</span>
+                        </div>
+
+                        <div class="list-group-item d-flex align-items-center px-0">
+                            <i class="bi bi-envelope-fill text-secondary fs-4 me-3"></i>
+                            <div class="flex-grow-1">
+                                <p class="fw-bold mb-0">Email de confirmação enviado</p>
+                                <small class="text-muted">Prof. Maria Silva</small>
+                            </div>
+                            <span class="small text-muted">4h atrás</span>
+                        </div>
+                        
+                        <div class="list-group-item d-flex align-items-center px-0">
+                            <i class="bi bi-journal-plus text-info fs-4 me-3"></i>
+                            <div class="flex-grow-1">
+                                <p class="fw-bold mb-0">Nova disciplina criada</p>
+                                <small class="text-muted">Filosofia - FIL</small>
+                            </div>
+                            <span class="small text-muted">1d atrás</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="card shadow-sm h-100 border-0">
+                <div class="card-body">
+                    <h5 class="card-title mb-1">Estatísticas Gerais</h5>
+                    <p class="card-subtitle text-muted small mb-4">Visão geral do sistema</p>
+                    
+                    <ul class="list-group list-group-flush">
+                       <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                           Taxa de Frequência Geral
+                           <span class="badge bg-primary rounded-pill">94.2%</span>
+                       </li>
+                       <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                           Média Geral da Rede
+                           <span class="badge bg-dark rounded-pill">8.1</span>
+                       </li>
+                       <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                           Usuários Ativos Hoje
+                           <span class="badge bg-success rounded-pill">342</span>
+                       </li>
+                       <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                           Confirmações Pendentes
+                           <span class="badge bg-danger rounded-pill">12</span>
+                       </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

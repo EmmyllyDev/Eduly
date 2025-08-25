@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Gerenciar Usuários - Eduly{% endblock %}
+
+{% block content %}
+<div class="container-fluid p-4">
+
+    <!-- =============================================================== -->
+    <!-- 1. Cabeçalho da Página -->
+    <!-- =============================================================== -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="h4 fw-bold mb-0">Gerenciar Usuários</h2>
+        <div class="d-flex">
+            <!-- Filtro de Tipo de Usuário -->
+            <div class="dropdown me-2">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ tipo_usuario|default:'Alunos'|title }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{% url 'usuarios:gerenciar_usuarios' %}?tipo=aluno">Alunos</a></li>
+                    <li><a class="dropdown-item" href="{% url 'usuarios:gerenciar_usuarios' %}?tipo=professor">Professores</a></li>
+                    <li><a class="dropdown-item" href="{% url 'usuarios:gerenciar_usuarios' %}?tipo=administrador">Administradores</a></li>
+                </ul>
+            </div>
+            <!-- Botão para Adicionar Novo Usuário -->
+            <a href="#" class="btn btn-dark">
+                <i class="bi bi-plus-lg me-1"></i> Novo {{ tipo_usuario|default:'Aluno'|title }}
+            </a>
+        </div>
+    </div>
+
+    <!-- =============================================================== -->
+    <!-- 2. Tabela de Usuários -->
+    <!-- =============================================================== -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+            <h5 class="card-title">Lista de {{ tipo_usuario|default:'Alunos'|title }}</h5>
+            <p class="card-subtitle text-muted small mb-3">
+                Gerencie os {{ tipo_usuario|default:'alunos' }} cadastrados no sistema.
+            </p>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Email</th>
+                            {% if tipo_usuario == 'aluno' %}
+                                <th scope="col">Turma</th>
+                            {% endif %}
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for usuario in usuarios %}
+                        <tr>
+                            <td>{{ usuario.get_full_name|default:usuario.username }}</td>
+                            <td>{{ usuario.email }}</td>
+                            {% if tipo_usuario == 'aluno' %}
+                                <td>{{ usuario.turma.nome|default:'N/A' }}</td>
+                            {% endif %}
+                            <td>
+                                {% if usuario.is_active %}
+                                    <span class="badge bg-dark">Ativo</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Inativo</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <!-- Editar -->
+                                <a href="{% url 'usuarios:editar_usuario' usuario.id %}" 
+                                   class="btn btn-sm btn-outline-secondary me-1" title="Editar">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <!-- Inativar/Reativar -->
+                                {% if usuario.is_active %}
+                                    <a href="{% url 'usuarios:inativar_usuario' usuario.id %}" 
+                                       class="btn btn-sm btn-outline-warning me-1" title="Inativar">
+                                        <i class="bi bi-person-dash"></i>
+                                    </a>
+                                {% else %}
+                                    <a href="{% url 'usuarios:reativar_usuario' usuario.id %}" 
+                                       class="btn btn-sm btn-outline-success me-1" title="Reativar">
+                                        <i class="bi bi-person-check"></i>
+                                    </a>
+                                {% endif %}
+                                <!-- Excluir -->
+                                <a href="{% url 'usuarios:excluir_usuario' usuario.id %}" 
+                                   class="btn btn-sm btn-outline-danger" title="Excluir">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                Nenhum {{ tipo_usuario|default:'aluno' }} encontrado.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Confirmar Exclusão{% endblock %}
+
+{% block content %}
+<div class="container p-4 text-center">
+    <h2>Excluir Usuário</h2>
+    <p>Tem certeza que deseja excluir <strong>{{ usuario.get_full_name|default:usuario.username }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+        <a href="{% url 'usuarios:gerenciar_usuarios' %}?tipo={{ usuario.tipo }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
